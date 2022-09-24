@@ -56,7 +56,7 @@ resource "aws_eip" "this" {
 # Network Load Balancer with Elastic IPs attached
 ##################################################################
 module "nlb" {
-  source = "../../"
+  source = "../modules/"
 
   name = "complete-nlb-${random_pet.this.id}"
 
