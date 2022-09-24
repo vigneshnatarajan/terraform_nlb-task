@@ -21,6 +21,10 @@ data "aws_subnets" "all" {
     name   = "vpc-id"
     values = [data.aws_vpc.default.id]
   }
+  filter {
+    name   = "availability-zone-id"
+    values = ['us-east-1a','us-east-1b']
+  }
 }
 
 resource "random_pet" "this" {
