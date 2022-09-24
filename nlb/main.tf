@@ -16,16 +16,6 @@ data "aws_vpc" "default" {
   default = true
 }
 
-data "aws_subnets" "all" {
-  filter {
-    name   = "vpc-id"
-    values = [data.aws_vpc.default.id]
-  }
-  filter {
-    name   = "availability-zone-id"
-    values = ["us-east-1a","us-east-1b"]
-  }
-}
 
 resource "random_pet" "this" {
   length = 2
@@ -67,7 +57,7 @@ module "nlb" {
   vpc_id = data.aws_vpc.default.id
 
   #   Use `subnets` if you don't want to attach EIPs
-  subnets = tolist(data.aws_subnet_ids.all.ids)
+  subnets = ["subnet-02a9d15ddddadd7e6","subnet-0900c416d4f8c2c48"]
 
   #   Use `subnet_mapping` to attach EIPs
   #subnet_mapping = [for i, eip in aws_eip.this : { allocation_id : eip.id, subnet_id : tolist(data.aws_subnets.all.ids)[i] }]
