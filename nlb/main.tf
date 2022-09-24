@@ -23,7 +23,7 @@ data "aws_subnets" "all" {
   }
   filter {
     name   = "availability-zone-id"
-    values = ['us-east-1a','us-east-1b']
+    values = ["us-east-1a","us-east-1b"]
   }
 }
 
