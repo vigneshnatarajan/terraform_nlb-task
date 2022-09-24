@@ -53,11 +53,6 @@ resource "random_pet" "this" {
 #  zone_id     = data.aws_route53_zone.this.id
 #}
 
-resource "aws_eip" "this" {
-  count = length[for subnet in data.aws_subnet.this : subnet.id if contains(["us-east-1a", "us-east-1b"], subnet.availability_zone)]
-
-  vpc = true
-}
 
 ##################################################################
 # Network Load Balancer with Elastic IPs attached
@@ -72,10 +67,10 @@ module "nlb" {
   vpc_id = data.aws_vpc.default.id
 
   #   Use `subnets` if you don't want to attach EIPs
-  #   subnets = tolist(data.aws_subnet_ids.all.ids)
+  subnets = tolist(data.aws_subnet_ids.all.ids)
 
   #   Use `subnet_mapping` to attach EIPs
-  subnet_mapping = [for i, eip in aws_eip.this : { allocation_id : eip.id, subnet_id : tolist(data.aws_subnets.all.ids)[i] }]
+  #subnet_mapping = [for i, eip in aws_eip.this : { allocation_id : eip.id, subnet_id : tolist(data.aws_subnets.all.ids)[i] }]
 
   #   # See notes in README (ref: https://github.com/terraform-providers/terraform-provider-aws/issues/7987)
   #   access_logs = {
