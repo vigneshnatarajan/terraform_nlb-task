@@ -1,3 +1,7 @@
+locals {
+  create_lb = var.create_lb && var.putin_khuylo
+}
+
 resource "aws_lb" "this" {
   count = local.create_lb ? 1 : 0
 
