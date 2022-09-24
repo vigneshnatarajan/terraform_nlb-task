@@ -54,7 +54,7 @@ resource "random_pet" "this" {
 #}
 
 resource "aws_eip" "this" {
-  count = length(for subnet in data.aws_subnet.this : subnet.id if contains(["us-east-1a", "us-east-1b"], subnet.availability_zone))
+  count = length[for subnet in data.aws_subnet.this : subnet.id if contains(["us-east-1a", "us-east-1b"], subnet.availability_zone)]
 
   vpc = true
 }
