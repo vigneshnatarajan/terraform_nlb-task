@@ -50,22 +50,14 @@ resource "random_pet" "this" {
 module "nlb" {
   source = "../modules/"
 
-  name = "complete-nlb-${random_pet.this.id}"
+  name = var.nlb_name
 
   load_balancer_type = "network"
 
-  vpc_id = data.aws_vpc.default.id
+  vpc_id = var.vpc_id
 
   #   Use `subnets` if you don't want to attach EIPs
-  subnets = ["subnet-02a9d15ddddadd7e6","subnet-0900c416d4f8c2c48"]
-
-  #   Use `subnet_mapping` to attach EIPs
-  #subnet_mapping = [for i, eip in aws_eip.this : { allocation_id : eip.id, subnet_id : tolist(data.aws_subnets.all.ids)[i] }]
-
-  #   # See notes in README (ref: https://github.com/terraform-providers/terraform-provider-aws/issues/7987)
-  #   access_logs = {
-  #     bucket = module.log_bucket.s3_bucket_id
-  #   }
+  subnets = var.subnet_list
 
 
   #  TCP_UDP, UDP, TCP
@@ -87,19 +79,9 @@ module "nlb" {
     },
   ]
 
-  #  TLS
- # https_listeners = [
- #   {
- #     port               = 84
- #     protocol           = "TLS"
- #     certificate_arn    = module.acm.acm_certificate_arn
- #     target_group_index = 3
- #   },
- # ]
-
   target_groups = [
     {
-      name_prefix            = "tu1-"
+      name            = var.tcp_udp_tg
       backend_protocol       = "TCP_UDP"
       backend_port           = 81
       target_type            = "instance"
@@ -110,13 +92,13 @@ module "nlb" {
       }
     },
     {
-      name_prefix      = "u1-"
+      name      = var.udp_tg
       backend_protocol = "UDP"
       backend_port     = 82
       target_type      = "instance"
     },
     {
-      name_prefix          = "t1-"
+      name          = var.tcp_tg
       backend_protocol     = "TCP"
       backend_port         = 83
       target_type          = "ip"
@@ -132,7 +114,7 @@ module "nlb" {
       }
     },
     {
-      name_prefix      = "t2-"
+      name      = var.tls_tg
       backend_protocol = "TLS"
       backend_port     = 84
       target_type      = "instance"
