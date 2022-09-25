@@ -47,7 +47,7 @@ resource "aws_security_group_rule" "defaultallow" {
   from_port         = 0
   to_port           = 65535
   protocol          = "tcp"
-  cidr_blocks       = data.aws_vpc.default.cidr_block
+  cidr_blocks       = [data.aws_vpc.default.cidr_block]
   security_group_id = data.aws_security_group.default.id
 }
 
