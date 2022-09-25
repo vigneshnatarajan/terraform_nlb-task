@@ -27,3 +27,10 @@ resource "aws_instance" "web" {
     Name = var.ec2_name
   }
 }
+
+
+resource "aws_lb_target_group_attachment" "test" {
+  target_group_arn = module.nlb.aws_lb_target_group.main.arn
+  target_id        = aws_instance.web.id
+  port             = 81
+}
