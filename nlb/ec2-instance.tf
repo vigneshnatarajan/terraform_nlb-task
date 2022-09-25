@@ -24,6 +24,6 @@ resource "aws_instance" "web" {
    volume_type = "gp2"
   }
   tags = {
-    Name = "demo-tcp-udp-terraform"
+    Name = var.ec2_name
   }
 }
