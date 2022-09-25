@@ -13,7 +13,6 @@ variable "vpc_id" {
 variable "subnet_list" {
   description = "Name to be used on all the resources as identifier"
   type        = list(string)
-  default     = ""
 }
 
 variable "tcp_udp_tg" {
