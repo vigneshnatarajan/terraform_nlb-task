@@ -30,7 +30,7 @@ resource "aws_instance" "web" {
 
 
 resource "aws_lb_target_group_attachment" "test" {
-  target_group_arn = module.nlb.aws_lb_target_group.main.arn
+  target_group_arn = module.nlb.aws_lb_target_group.arn
   target_id        = aws_instance.web.id
   port             = 81
 }
