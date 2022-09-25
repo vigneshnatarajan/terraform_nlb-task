@@ -213,3 +213,27 @@ variable "putin_khuylo" {
   type        = bool
   default     = true
 }
+
+variable "tcp_udp_tg" {
+  description = "Name to be used on all the resources as identifier"
+  type        = string
+  default     = ""
+}
+
+variable "udp_tg" {
+  description = "Name to be used on all the resources as identifier"
+  type        = string
+  default     = ""
+}
+
+variable "tcp_tg" {
+  description = "Name to be used on all the resources as identifier"
+  type        = string
+  default     = ""
+}
+
+variable "tls_tg" {
+  description = "Name to be used on all the resources as identifier"
+  type        = string
+  default     = ""
+}
