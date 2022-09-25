@@ -37,5 +37,5 @@ resource "aws_instance" "web" {
 resource "aws_lb_target_group_attachment" "test" {
   target_group_arn = data.aws_lb_target_group.tcp-udp.arn
   target_id        = aws_instance.web.id
-  port             = 81
+  port             = 80
 }
