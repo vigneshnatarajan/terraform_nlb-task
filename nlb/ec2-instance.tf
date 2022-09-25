@@ -14,6 +14,11 @@ data "aws_ami" "amazon-linux-2" {
  }
 }
 
+data "aws_lb_target_group" "tcp-udp" {
+ depends_on = [module.nlb] 
+ name = var.tcp_udp_tg
+}
+
 resource "aws_instance" "web" {
   ami           = data.aws_ami.amazon-linux-2.id
   instance_type = var.instane_type
@@ -30,7 +35,7 @@ resource "aws_instance" "web" {
 
 
 resource "aws_lb_target_group_attachment" "test" {
-  target_group_arn = module.nlb.aws_lb_target_group.arn
+  target_group_arn = data.aws_lb_target_group.tcp-udp.arn
   target_id        = aws_instance.web.id
   port             = 81
 }
