@@ -63,7 +63,7 @@ module "nlb" {
   #  TCP_UDP, UDP, TCP
   http_tcp_listeners = [
     {
-      port               = 80
+      port               = 22
       protocol           = "TCP_UDP"
       target_group_index = 0
     },
@@ -77,13 +77,18 @@ module "nlb" {
       protocol           = "TCP"
       target_group_index = 2
     },
+    {
+      port               = 84
+      protocol           = "TCP"
+      target_group_index = 3
+    },
   ]
 
   target_groups = [
     {
       name            = var.tcp_udp_tg
       backend_protocol       = "TCP_UDP"
-      backend_port           = 80
+      backend_port           = 22
       target_type            = "instance"
       connection_termination = true
       preserve_client_ip     = true
