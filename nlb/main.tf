@@ -77,11 +77,6 @@ module "nlb" {
       protocol           = "TCP"
       target_group_index = 2
     },
-    {
-      port               = 84
-      protocol           = "TCP"
-      target_group_index = 3
-    },
   ]
 
   target_groups = [
