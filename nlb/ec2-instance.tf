@@ -18,6 +18,15 @@ data "aws_lb_target_group" "tcp-udp" {
  depends_on = [module.nlb] 
  name = var.tcp_udp_tg
 }
+ 
+data "aws_security_group" "default" {
+  vpc_id = data.aws_vpc.default.id
+
+  filter {
+    name   = "group-name"
+    values = ["default"]
+  }
+}
 
 resource "aws_instance" "web" {
   ami           = data.aws_ami.amazon-linux-2.id
@@ -38,9 +47,8 @@ resource "aws_security_group_rule" "defaultallow" {
   from_port         = 0
   to_port           = 65535
   protocol          = "tcp"
-  cidr_blocks       = [aws_vpc.example.cidr_block]
-  ipv6_cidr_blocks  = [aws_vpc.example.ipv6_cidr_block]
-  security_group_id = "sg-123456"
+  cidr_blocks       = data.aws_vpc.default.cidr_block
+  security_group_id = data.aws_security_group.default.id
 }
 
 
