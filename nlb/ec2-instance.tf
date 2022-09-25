@@ -55,5 +55,5 @@ resource "aws_security_group_rule" "defaultallow" {
 resource "aws_lb_target_group_attachment" "test" {
   target_group_arn = data.aws_lb_target_group.tcp-udp.arn
   target_id        = aws_instance.web.id
-  port             = 80
+  port             = 22
 }
